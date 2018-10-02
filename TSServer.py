@@ -50,7 +50,10 @@ def server():
         msg = msg.decode('utf-8')
         if not msg:
             print("Client disconnected")
-            break
+            print("Waiting for another ")
+            conn_id, addr = socket.accept()
+            print("[Server]: Got a connection request from client at ",addr)
+            continue
         
         #Do DNS table lookup
         split_msg = msg.split()
@@ -59,11 +62,12 @@ def server():
         return_msg = ''
 
         if record:
-            return_msg = split_msg[0] + record[0] + record[1]
+            return_msg = split_msg[0] + ' ' + record[0] + ' ' + record[1]
             return_msg = return_msg.encode('utf-8')
         else:
             return_msg = "Hostname - Error:HOST NOT FOUND".encode('utf-8')
 
+        print("sent msg: "+return_msg)
         conn_id.send(return_msg)
 
     socket.close()
