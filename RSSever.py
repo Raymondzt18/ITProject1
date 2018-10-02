@@ -7,13 +7,11 @@ import pprint
 import socket as mysoc
 
 RS_DNS_table={}
-TShostname=populate_RS_DNS()
+
 def RS_server():
 
-	
-	recordString=find_Record('www.gosogle.com')
+	TShostname=populate_RS_DNS()
 
-	print("TS Hostname is", TShostname)
 	try:
 		ss=mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
 		print("[S]: RS Server socket created")
@@ -34,11 +32,20 @@ def RS_server():
 	
 	#waits for IP request messages from client
 	while True:
-		data_from_client=csockid.recv(100).decode('utf-8')
+		data_from_client=csockid.recv(200).decode('utf-8')
 		#client has disconnected from the server
 		if not data_from_client:
 			print("[S]: Client disconnected", addr)
 			break
+			
+		recordString=find_Record(data_from_client)
+	
+		#if cannot find the given hostname, send the TS host record back to client
+		if recordString=='':
+			recordString=find_Record(TShostname)
+		
+		print("record string sent back", recordString)
+		csockid.sendall(recordString.encode('utf-8'))
 
 #Populates the RS DNS and returns the TS hostname
 def populate_RS_DNS():
@@ -50,12 +57,11 @@ def populate_RS_DNS():
 	for line in RS_file.readlines():
 		line=line.split()
 		
+		#populate the DNS
+		RS_DNS_table[line[0]]=(line[1], line[2])
 		#store the hostname that is running the TS server
 		if line[2]=='NS':
 			TShostname=line[0]
-		#populate the DNS
-		else:
-			RS_DNS_table[line[0]]=(line[1], line[2])
 		#print(line)
 		
 		
@@ -71,7 +77,6 @@ def find_Record(hostname):
 	if hostname in RS_DNS_table:
 		recordPair=RS_DNS_table.get(hostname)
 		record=hostname+' '+recordPair[0]+' '+recordPair[1]
-		print("record is",record)
 		
 	return record
 	
