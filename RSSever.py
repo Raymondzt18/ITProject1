@@ -23,6 +23,7 @@ def RS_server():
 	ss.bind(server_binding)
 	ss.listen(1)
 	host=mysoc.gethostname()
+	
 	print("[S]: Server host name is: ",host)
 	localhost_ip=(mysoc.gethostbyname(host))
 	print("[S]: Server IP address is  ",localhost_ip)
@@ -33,10 +34,14 @@ def RS_server():
 	#waits for IP request messages from client
 	while True:
 		data_from_client=csockid.recv(200).decode('utf-8')
+		
 		#client has disconnected from the server
 		if not data_from_client:
-			print("[S]: Client disconnected", addr)
-			break
+			print("Client disconnected")
+			print("Waiting for another")
+			csockid, addr = ss.accept()
+			print("[S]: Got a connection request from client at ",addr)
+			continue
 			
 		recordString=find_Record(data_from_client)
 	
@@ -44,14 +49,17 @@ def RS_server():
 		if recordString=='':
 			recordString=find_Record(TShostname)
 		
-		print("record string sent back", recordString)
+		print("Record Sent back:", recordString)
 		csockid.sendall(recordString.encode('utf-8'))
-
+		
+	print("[S]: Server Closed")
+	
 #Populates the RS DNS and returns the TS hostname
 def populate_RS_DNS():
 
 	RS_file=open('PROJ1-DNSRS.txt', 'r')
 	TShostname=''
+	
 	#Read line by line from file and split the different parts
 	#Each line contains [Hostname IPaddress A/NS]
 	for line in RS_file.readlines():
@@ -62,8 +70,6 @@ def populate_RS_DNS():
 		#store the hostname that is running the TS server
 		if line[2]=='NS':
 			TShostname=line[0]
-		#print(line)
-		
 		
 	print("Printing RS DNS")
 	pprint.pprint(RS_DNS_table)
@@ -79,5 +85,6 @@ def find_Record(hostname):
 		record=hostname+' '+recordPair[0]+' '+recordPair[1]
 		
 	return record
+	
 	
 RS_server()

@@ -20,13 +20,16 @@ def server():
     f = open(name_of_file, 'r')
 
     DNS_table = {}
-
+    
+	#populates DNS table
     for line in f:
     
         triplet = line.split()
 
         if triplet:
             DNS_table[triplet[0]]=((triplet[1], triplet[2]))
+    
+    print("Printing TS DNS")        
     pprint.pprint(DNS_table) 
 
     try:
@@ -34,6 +37,7 @@ def server():
         print("[Server]: Server socket created")
     except mysoc.error as err:
         print('{} \n'.format("socket open error ",err))
+
 
     server_binding = ('', 60001)
     socket.bind(server_binding)
@@ -45,6 +49,7 @@ def server():
 
     conn_id, addr = socket.accept()
     print("[Server]: Got a connection request from client at ",addr)
+    
     while True:
         msg = conn_id.recv(100)
         msg = msg.decode('utf-8')
@@ -67,7 +72,7 @@ def server():
         else:
             return_msg = "Hostname - Error:HOST NOT FOUND".encode('utf-8')
 
-        print("sent msg: "+return_msg)
+        print("Message sent: "+return_msg.decode('utf-8'))
         conn_id.send(return_msg)
 
     socket.close()
