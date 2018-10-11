@@ -1,0 +1,12 @@
+null.cs.rutgers.edu   -  NS
+qtsdatacenter.aws.com  128.64.3.2  A
+mx.rutgers.edu   192.64.4.2  A
+kill.cs.rutgers.edu 182.48.3.2 A
+www.ibm.com 64.42.3.4 A
+www.google.com  8.6.4.2 A
+www.youtube.com 244.52.1.2 A
+facade.cs.rutgers.edu 123.123.123.123 A
+idc.lalala.gov 12.12.31.122 A
+give.me.A.edu 123.12.1.1 A
+www.cheese.com 11.11.11.11
+www.leekspin.com 22.22.22.22
