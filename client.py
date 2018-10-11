@@ -2,13 +2,20 @@ import numpy as mypy
 import threading
 import time
 import random
-
+import sys
 import socket as mysoc
 
 #creates socket that will communicate with RS server
 
 def client():
-
+	RShostname=''
+	#Should have 1 argument (hostname running RS Server)
+	if len(sys.argv)<2:
+		print("Please enter host name of RS Server")
+		exit()
+	else:
+		RShostname=sys.argv[1]
+		
 	outputFile=open('RESOLVED.txt', 'w+')
 	
 	try:
@@ -19,9 +26,9 @@ def client():
 	
 	#Define the port on which you want to connect to the server
 	port=56789
-	sa_sameas_myaddr =mysoc.gethostbyname(mysoc.gethostname())
+	sa_sameas_myaddr =mysoc.gethostbyname(RShostname)
 
-	# connect to the RS server on local machine
+	# connect to the RS server at RShostname
 	server_binding=(sa_sameas_myaddr,port)
 	cs.connect(server_binding)
 
