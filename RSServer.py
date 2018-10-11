@@ -2,14 +2,14 @@ import numpy as mypy
 import threading
 import time
 import random
-import pprint
 
 import socket as mysoc
 
 RS_DNS_table={}
 
 def RS_server():
-
+	
+	#When server first runs, populate the DNS and get the TS hostname
 	TShostname=populate_RS_DNS()
 
 	try:
@@ -70,9 +70,6 @@ def populate_RS_DNS():
 		#store the hostname that is running the TS server
 		if line[2]=='NS':
 			TShostname=line[0]
-		
-	print("Printing RS DNS")
-	pprint.pprint(RS_DNS_table)
 	
 	return TShostname
 

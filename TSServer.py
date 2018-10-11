@@ -3,17 +3,8 @@ import numpy as mypy
 import threading
 import time
 import random
-import pprint
 
 import socket as mysoc
-
-def removeChar(c, l): #Given a character, removes all occurrences from list
-    result = []
-    for element in l:
-        if element != c:
-            result.append(element)
-    return result
-
 
 def server():
     name_of_file = "PROJI-DNSTS.txt"
@@ -28,9 +19,7 @@ def server():
 
         if triplet:
             DNS_table[triplet[0]]=((triplet[1], triplet[2]))
-    
-    print("Printing TS DNS")        
-    pprint.pprint(DNS_table) 
+
 
     try:
         socket = mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
