@@ -8,16 +8,7 @@ import sys
 import socket as mysoc
 
 #creates socket that will communicate with RS server
-#Hostname for RS server should be given in command
 def client():
-
-	RShostname=''
-	#Should have 1 argument (hostname running RS Server)
-	if len(sys.argv)<2:
-		print("Please enter host name of RS Server")
-		exit()
-	else:
-		RShostname=sys.argv[1]
 	
 	outputFile=open('RESOLVED.txt', 'w+')
 	
@@ -29,7 +20,7 @@ def client():
 	
 	#Define the port and IP address to connect to the RS server
 	port=56789
-	sa_sameas_myaddr =mysoc.gethostbyname(RShostname)
+	sa_sameas_myaddr =mysoc.gethostbyname(mysoc.gethostname())
 
 	# connect to the RS server
 	server_binding=(sa_sameas_myaddr,port)
