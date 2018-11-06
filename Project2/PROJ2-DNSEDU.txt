@@ -1,7 +1,6 @@
-qtsdatacenter.aws.edu   128.60.3.2  A
-www.rutgers.edu   192.64.4.4  A
-mx.rutgers.edu 192.64.4.5 A
-grep.cs.princeton.edu 182.49.3.2 A
-www.ibm.edu 64.42.3.4 A
-www.google.edu  8.7.45.2 A
+mx.rutgers.edu   192.64.4.2  A
+kill.cs.rutgers.edu 182.48.3.2 A
+foo.edu 111.111.111.2 A
+yyy.edu  12.1.2.2 A
+123.edu 123.123.1243 A
 

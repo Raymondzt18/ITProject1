@@ -1,0 +1,5 @@
+qtsdatacenter.aws.com  128.64.3.2  A
+TLDS2.com	pascal.cs.rutgers.edu  NS
+TLDS1.edu   pascal.cs.rutgers.edu  NS
+xyz.gov   123.43.5.6  A
+poop.gov   9.9.9.9.9  A
