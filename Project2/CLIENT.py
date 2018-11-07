@@ -41,16 +41,18 @@ def client():
 	outputFile=open('RESOLVED.txt', 'w+')
 	
 	for line in hostNameFile.readlines():
-		line=line.rstrip()
-		print("[C]: Requesting IP for hostname:", line)
-		cs.sendall(line.encode('utf-8'))
-		data_from_server=cs.recv(200).decode('utf-8')
 	
-		#receive data from the server is in the form [Hostname IPaddress A/NS]
+		line=line.rstrip()
+		if line:
+			print("[C]: Requesting IP for hostname:", line)
+			cs.sendall(line.encode('utf-8'))
+			data_from_server=cs.recv(200).decode('utf-8')
+	
+			#receive data from the server is in the form [Hostname IPaddress A/NS]
 		
-		print("\tData received from server:  ",data_from_server)
+			print("\tData received from server:  ",data_from_server)
 		
-		outputFile.write(data_from_server+'\n')
+			outputFile.write(data_from_server+'\n')
 
 	
 client()

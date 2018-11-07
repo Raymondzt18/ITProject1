@@ -91,8 +91,9 @@ def populate_RS_DNS():
 	#Each line contains [Hostname IPaddress A/NS]
 	for line in RS_file.readlines():
 		line=line.split()
-		#populate the DNS
-		RS_DNS_table[line[0]]=(line[1], line[2])
+		if line:
+			#populate the DNS
+			RS_DNS_table[line[0]]=(line[1], line[2])
 	
 #Given hostname, returns the string record of that hostname [Hostname IPaddress A]
 #Returns empty string if not found

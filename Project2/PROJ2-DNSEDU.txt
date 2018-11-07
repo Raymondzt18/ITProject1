@@ -1,6 +1,5 @@
-mx.rutgers.edu   192.64.4.2  A
-kill.cs.rutgers.edu 182.48.3.2 A
-foo.edu 111.111.111.2 A
-yyy.edu  12.1.2.2 A
-123.edu 123.123.1243 A
+columbia.edu 203.146.175.99 A
+duke.edu 21.210.31.185 A
+www.princeton.edu 159.112.40.146 A
+www.dragon.edu 17.193.91.46 A
 
