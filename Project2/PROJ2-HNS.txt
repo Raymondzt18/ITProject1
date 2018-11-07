@@ -1,9 +1,11 @@
-mx.rutgers.com
-kill.cs.rutgers.edu
-www.ibm.edu
-www.google.com
-www.gmail.gov
-poop.gov
+place.net
+place.com
+flat.edu
+rutgers.edu
+www.princeton.edu
+google.com
+www.test.org
+happy.com
 
 
 

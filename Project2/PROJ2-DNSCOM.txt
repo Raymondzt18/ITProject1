@@ -1,4 +1,5 @@
-www.ibm.com 64.42.3.4 A
-www.google.com  8.6.4.2 A
-www.fun.com 1.2.3.4.5 A
-www.yay.com 0.0.0.0.0 A
+google.com 19.45.31.54 A
+www.amazon.com 36.166.252.207 A
+browserling.com 224.229.150.118 A
+facebook.com 206.20.176.129 A
+

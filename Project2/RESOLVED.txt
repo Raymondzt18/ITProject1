@@ -1,6 +1,8 @@
 Hostname - Error:HOST NOT FOUND
 Hostname - Error:HOST NOT FOUND
 Hostname - Error:HOST NOT FOUND
-www.google.com 8.6.4.2 A
-Hostname - Error:HOST NOT FOUND
-poop.gov 9.9.9.9.9 A
+rutgers.edu 86.95.3.172 A
+www.princeton.edu 159.112.40.146 A
+google.com 19.45.31.54 A
+www.test.org 104.209.216.174 A
+happy.com 109.78.231.33 A
