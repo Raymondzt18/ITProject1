@@ -1,6 +1,6 @@
 Hostname - Error:HOST NOT FOUND
 kill.cs.rutgers.edu 182.48.3.2 A
 Hostname - Error:HOST NOT FOUND
-Hostname - Error:HOST NOT FOUND
+www.google.com 8.6.4.2 A
 Hostname - Error:HOST NOT FOUND
 poop.gov 9.9.9.9.9 A

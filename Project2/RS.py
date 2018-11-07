@@ -28,8 +28,6 @@ def RS_server():
 		COMhostname=sys.argv[1]
 		EDUhostname=sys.argv[2]
 		RS_input=sys.argv[3]
-		
-	print("com: ",COMhostname," edu: ",EDUhostname,"input: ",RS_input)
 	
 	#When server first runs, populate the DNS
 	populate_RS_DNS()
@@ -74,10 +72,10 @@ def RS_server():
 			#split the hostname to find top level server
 			if data_from_client.endswith('.com'):
 				print('Connecting to TSCOM server')
-				recordString=findRecordIn_TS(data_from_client, COMhostname)
+				recordString=findRecordIn_TS(data_from_client, COMhostname,60002)
 			elif data_from_client.endswith('.edu'):
 				print('Connecting to TSEDU server')
-				recordString=findRecordIn_TS(data_from_client, EDUhostname)
+				recordString=findRecordIn_TS(data_from_client, EDUhostname,60001)
 			else:
 				recordString="Hostname - Error:HOST NOT FOUND"
 		
@@ -108,7 +106,7 @@ def find_Record(hostname):
 
 #Creates socket that will communicate with one of the TS servers
 #Returns the record of the given hostname at the TS DNS, or HOST NOT FOUND
-def findRecordIn_TS(hostname, TShostname):
+def findRecordIn_TS(hostname, TShostname, port):
 	
 	try:
 		cs=mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
@@ -116,8 +114,7 @@ def findRecordIn_TS(hostname, TShostname):
 	except mysoc.error as err:
 		print('{} \n'.format("socket open error ",err))
 
-	#Define the port and IP to connect to the TS server
-	port=60001
+	#Define the IP to connect to the TS server
 	TSserverIP=mysoc.gethostbyname(TShostname)
 	
 	# connect to the TS server

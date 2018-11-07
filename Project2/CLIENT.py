@@ -50,8 +50,6 @@ def client():
 		
 		print("\tData received from server:  ",data_from_server)
 		
-		dataArray=data_from_server.split()
-		
 		outputFile.write(data_from_server+'\n')
 
 	
