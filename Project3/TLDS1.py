@@ -4,13 +4,23 @@ import numpy as mypy
 import threading
 import time
 import random
+import hmac
 
 import socket as mysoc
 
 def server():
-    name_of_file = "PROJI-DNSTS.txt"
-    f = open(name_of_file, 'r')
+    name_of_keyFile = "PROJ3-KEY1.txt"
+    f = open(name_of_keyFile, 'r')
 
+    key=""
+    for line in f:
+        key=line.strip()
+        break
+
+    name_of_DNSFile="PROJ3-TLDS1.txt"
+    f=open(name_of_DNSFile, 'r')
+
+    #[hostname, IP, A/NS]
     DNS_table = {}
     
 	#populates DNS table
@@ -24,7 +34,7 @@ def server():
 
     try:
         socket = mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
-        print("[Server]: Server socket created")
+        print("[S]: Server socket created")
     except mysoc.error as err:
         print('{} \n'.format("socket open error ",err))
 
@@ -33,12 +43,12 @@ def server():
     socket.bind(server_binding)
     socket.listen(1) #parameter  is the maximum number of queued connections aka backlog
     host = mysoc.gethostname()
-    print("[Server]: Server host name is: ",host)
+    print("[S]: Server host name is: ",host)
     localhost_ip = (mysoc.gethostbyname(host))
-    print("[Server]: Server IP address is ",localhost_ip)
+    print("[S]: Server IP address is ",localhost_ip)
 
     conn_id, addr = socket.accept()
-    print("[Server]: Got a connection request from client at ",addr)
+    print("[S]: Got a connection request from ",addr)
     
     while True:
         msg = conn_id.recv(100)
@@ -50,20 +60,32 @@ def server():
             print("[Server]: Got a connection request from client at ",addr)
             continue
         
-        #Do DNS table lookup
+        
         split_msg = msg.split()
+        identify=split_msg[0]
+        if identify=="CLIENT":
 
-        record = DNS_table.get(split_msg[0])
-        return_msg = ''
+            #Do DNS table lookup
+            print("Looking for IP of ", split_msg[1].strip())
 
-        if record:
-            return_msg = split_msg[0] + ' ' + record[0] + ' ' + record[1]
-            return_msg = return_msg.encode('utf-8')
-        else:
-            return_msg = "Hostname - Error:HOST NOT FOUND".encode('utf-8')
+            record = DNS_table.get(split_msg[1].strip())
+            return_msg = ''
 
-        print("Message sent: "+return_msg.decode('utf-8'))
-        conn_id.send(return_msg)
+            if record:
+                return_msg = split_msg[1] + ' ' + record[0] + ' ' + record[1]
+                return_msg = return_msg.encode('utf-8')
+            else:
+                return_msg = "Error:HOST NOT FOUND".encode('utf-8')
+
+            print("Message sent: "+return_msg.decode('utf-8'))
+            conn_id.send(return_msg)
+        elif identify=="AS":
+            challenge=split_msg[1]
+            digest = hmac.new(key.encode(), challenge.encode("utf-8"))
+            print("Digest sent: "+digest.hexdigest())
+
+            conn_id.send(digest.hexdigest().encode("utf-8"))
+
 
     socket.close()
     exit()

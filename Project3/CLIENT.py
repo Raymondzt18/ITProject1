@@ -58,13 +58,17 @@ def client():
 		
 		print("[C]: TSHostName Received "+ TShostname)
 
-		TSport
-		if TShostname == "null.cs.rutgers.edu":
+		TSport=60001
+		if TShostname == "pascal.cs.rutgers.edu":
 			TSport = 60001
 		elif TShostname == "pascal.cs.rutgers.edu":
 			TSport = 60002
 
-		data_from_server = findRecordInTS(hostname, TSHostname, TSport)
+		data_from_server = findRecordInTS(hostname, TShostname, TSport)
+
+		if data_from_server=='Error: HOST NOT FOUND':
+			outputFile.write("Error: HOST NOT FOUND")
+			continue 
 
 		dataArray=data_from_server.split()
 		
@@ -72,8 +76,9 @@ def client():
 			print(hostname + " is not found")
 			outputFile.write("Error: HOST NOT FOUND")
 			continue
+
 		else:
-			outputMsg = TShostname + " " data_from_server
+			outputMsg = TShostname + " " +data_from_server+"\n"
 			outputFile.write(outputMsg)
 		
 #Given a hostName that we want the IP of and the hostname of the TS Server, find the IP
@@ -92,7 +97,10 @@ def findRecordInTS(hostname, TShostname, TSport):
 	# connect to the TS server
 	server_binding=(TSserverIP,port)
 	cs.connect(server_binding)
-	cs.sendall(hostname.encode('utf-8'))
+
+	# "CLIENT hostname" is sent to TS to identify client message
+	message="CLIENT "+hostname
+	cs.sendall(message.encode('utf-8'))
 	data_from_server=cs.recv(200).decode('utf-8')
 
 	#receive data from the server
