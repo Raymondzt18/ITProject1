@@ -1,11 +1,12 @@
 #Raymond Tan (rt503) Feiying Zheng (fz95)
+#Running on java.cs.rutgers.edu
 
 import numpy as mypy
 import threading
 import time
 import random
 import hmac
-
+import pprint
 import socket as mysoc
 
 def server():
@@ -28,10 +29,11 @@ def server():
     
         triplet = line.split()
 
-        if triplet:
+        if triplet and triplet[2]!="NS":
             DNS_table[triplet[0]]=((triplet[1], triplet[2]))
 
-
+    pprint.pprint(DNS_table)
+    
     try:
         socket = mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
         print("[S]: Server socket created")

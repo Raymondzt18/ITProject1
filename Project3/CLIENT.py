@@ -1,4 +1,5 @@
 #Raymond Tan (rt503) Feiying Zheng (fz95)
+#Client and AS server runs on same machine
 
 import numpy as mypy
 import threading
@@ -9,16 +10,7 @@ import socket as mysoc
 import hmac
 
 #creates socket that will communicate with Auth server
-#Hostname for Auth server should be given in command
 def client():
-
-	AShostname=''
-	#Should have 1 argument (hostname running Auth Server)
-	if len(sys.argv)<2:
-		print("Please enter host name of Auth Server")
-		exit()
-	else:
-		AShostname=sys.argv[1]
 	
 	outputFile=open('RESOLVED.txt', 'w+')
 	
@@ -30,7 +22,7 @@ def client():
 	
 	#Define the port and IP address to connect to the RS server
 	port=56789
-	sa_sameas_myaddr =mysoc.gethostbyname(AShostname)
+	sa_sameas_myaddr =mysoc.gethostbyname(mysoc.gethostname())
 
 	# connect to the Auth server
 	server_binding=(sa_sameas_myaddr,port)
@@ -48,7 +40,7 @@ def client():
 		hostname = line[2].rstrip()
 		digest = hmac.new(key.encode(), challenge.encode("utf-8"))
 
-		print("[C]: Sending challenge " + challenge + " and digest "+digest.hexdigest())
+		print("[C]: Sending Challenge: " + challenge + " Digest: "+digest.hexdigest())
 		
 		msg = challenge + " " + digest.hexdigest()
 		cs.sendall(msg.encode('utf-8'))
@@ -56,12 +48,12 @@ def client():
 		#Response from Auth server with TS hostname
 		TShostname = cs.recv(200).decode('utf-8')
 		
-		print("[C]: TSHostName Received "+ TShostname)
+		print("[C]: TSHostName Received: "+ TShostname)
 
 		TSport=60001
-		if TShostname == "pascal.cs.rutgers.edu":
+		if TShostname == "cpp.cs.rutgers.edu":
 			TSport = 60001
-		elif TShostname == "pascal.cs.rutgers.edu":
+		elif TShostname == "java.cs.rutgers.edu":
 			TSport = 60002
 
 		data_from_server = findRecordInTS(hostname, TShostname, TSport)
@@ -69,7 +61,7 @@ def client():
 		if data_from_server=='Error: HOST NOT FOUND':
 			outputFile.write("Error: HOST NOT FOUND")
 			continue 
-
+		
 		dataArray=data_from_server.split()
 		
 		if dataArray[2]=='NS':
@@ -78,6 +70,7 @@ def client():
 			continue
 
 		else:
+			#Outputs response from TLDS server (even if is not found)
 			outputMsg = TShostname + " " +data_from_server+"\n"
 			outputFile.write(outputMsg)
 		
@@ -86,10 +79,11 @@ def findRecordInTS(hostname, TShostname, TSport):
 	
 	try:
 		cs=mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
-		print("\t[C]: Client socket created to connect to TS Server")
+		print("[C]: Client socket created to connect to TS Server")
 	except mysoc.error as err:
 		print('{} \n'.format("socket open error ",err))
-
+		
+	print("[C]: Requesting IP for: ", hostname)
 	#Define the port and IP to connect to the TS server
 	port=TSport
 	TSserverIP=mysoc.gethostbyname(TShostname)
@@ -104,7 +98,7 @@ def findRecordInTS(hostname, TShostname, TSport):
 	data_from_server=cs.recv(200).decode('utf-8')
 
 	#receive data from the server
-	print("\tData received from server:",data_from_server)
+	print("Data received from server:",data_from_server)
 	
 	return data_from_server		
 	

@@ -1,4 +1,5 @@
 #Raymond Tan (rt503) Feiying Zheng (fz95)
+#Client and AS server runs on same machine
 
 import numpy as mypy
 import threading
@@ -9,19 +10,11 @@ import hmac
 
 import socket as mysoc
 
-TS1=""
-TS2=""
 
-def RS_server():
-	global TS1
-	global TS2
-	
-	if len(sys.argv)<3:
-		print("Not enough arguments")
-		exit()
-	else:
-		TS1=sys.argv[1]
-		TS2=sys.argv[2]
+
+def AS_server():
+	TS1="cpp.cs.rutgers.edu"
+	TS2="java.cs.rutgers.edu"
 	
 	try:
 		ss=mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
@@ -59,24 +52,28 @@ def RS_server():
 		challenge=dataArray[0]
 		digest=dataArray[1]
 		
+		#Get digests from the TS servers
 		digestTS1=getTSDigest(challenge, TS1,60001)
 		
 		digestTS2=getTSDigest(challenge, TS2,60002)
 		
+		#Send back the TS Server name where the digests match
 		if digestTS1==digest:
+			print("[S]: Sending: " + TS1 + " to client")
 			csockid.sendall(TS1.encode('utf-8'))
 		elif digestTS2==digest:
+			print("[S]: Sending: " + TS2 + " to client")
 			csockid.sendall(TS2.encode('utf-8'))
 
 	print("[S]: Server Closed")
 	
 
-#Given a hostName that we want the IP of and the hostname of the TS Server, find the IP
+#Contact the given TS server with a challenge to get its digest
 def getTSDigest(challenge,TShostname, TSport):
 	
 	try:
 		cs=mysoc.socket(mysoc.AF_INET, mysoc.SOCK_STREAM)
-		print("\t[S]: Client socket created to connect to TS Server")
+		print("[S]: Client socket created to connect to TS Server")
 	except mysoc.error as err:
 		print('{} \n'.format("socket open error ",err))
 
@@ -95,8 +92,8 @@ def getTSDigest(challenge,TShostname, TSport):
 	digest=cs.recv(200).decode('utf-8')
 	
 	#receive data from the server
-	print("\tDigest received from TS server:",digest)
+	print("Digest received from TS server:",digest)
 	
 	return digest		
 	
-RS_server()
+AS_server()
