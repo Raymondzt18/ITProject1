@@ -35,6 +35,8 @@ def client():
 	#Line is [key, challenge, ip]
 	for line in hostNameFile.readlines():
 		line=line.split()
+		if len(line)<3:
+			continue
 		key = line[0].rstrip()
 		challenge = line[1].rstrip()
 		hostname = line[2].rstrip()
@@ -50,11 +52,11 @@ def client():
 		
 		print("[C]: TSHostName Received: "+ TShostname)
 
-		TSport=60001
+		TSport=60011
 		if TShostname == "cpp.cs.rutgers.edu":
-			TSport = 60001
+			TSport = 60011
 		elif TShostname == "java.cs.rutgers.edu":
-			TSport = 60002
+			TSport = 60022
 
 		data_from_server = findRecordInTS(hostname, TShostname, TSport)
 

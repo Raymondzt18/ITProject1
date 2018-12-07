@@ -53,9 +53,9 @@ def AS_server():
 		digest=dataArray[1]
 		
 		#Get digests from the TS servers
-		digestTS1=getTSDigest(challenge, TS1,60001)
+		digestTS1=getTSDigest(challenge, TS1,60011)
 		
-		digestTS2=getTSDigest(challenge, TS2,60002)
+		digestTS2=getTSDigest(challenge, TS2,60022)
 		
 		#Send back the TS Server name where the digests match
 		if digestTS1==digest:

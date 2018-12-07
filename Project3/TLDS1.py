@@ -41,7 +41,7 @@ def server():
         print('{} \n'.format("socket open error ",err))
 
 
-    server_binding = ('', 60001)
+    server_binding = ('', 60011)
     socket.bind(server_binding)
     socket.listen(1) #parameter  is the maximum number of queued connections aka backlog
     host = mysoc.gethostname()

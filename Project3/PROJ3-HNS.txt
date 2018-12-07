@@ -2,3 +2,10 @@ k3521 ramirez mx.rutgers.com
 k6854 fedora kill.cs.rutgers.edu
 k6854 wales www.ibm.edu
 k3521 roberts www.google.com
+k6854 raymond qtsdatacenter.aws.com
+k3521 mary grep.cs.rutgers.edu
+k3521 kevin mx.rutgers.edu
+k6854 poppy grep.cs.princeton.edu
+k6854 yum foo.com
+k6854 yeee kill.cs.rutgers.edu
+

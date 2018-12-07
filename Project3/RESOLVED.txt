@@ -2,3 +2,9 @@ cpp.cs.rutgers.edu Error:HOST NOT FOUND
 java.cs.rutgers.edu Error:HOST NOT FOUND
 java.cs.rutgers.edu Error:HOST NOT FOUND
 cpp.cs.rutgers.edu www.google.com 8.6.4.2 A
+java.cs.rutgers.edu Error:HOST NOT FOUND
+cpp.cs.rutgers.edu Error:HOST NOT FOUND
+cpp.cs.rutgers.edu mx.rutgers.edu 192.64.4.2 A
+java.cs.rutgers.edu grep.cs.princeton.edu 182.49.3.2 A
+java.cs.rutgers.edu Error:HOST NOT FOUND
+java.cs.rutgers.edu Error:HOST NOT FOUND
